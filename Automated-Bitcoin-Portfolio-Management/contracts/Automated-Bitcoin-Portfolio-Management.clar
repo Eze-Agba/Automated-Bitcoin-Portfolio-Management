@@ -300,3 +300,49 @@
     (asserts! (and (>= percentage u0) (< percentage u50)) err-invalid-threshold)
     (var-set max-slippage-percentage percentage)
     (ok true)))
+
+;; Set the performance fee percentage
+(define-public (set-performance-fee (percentage uint))
+  (begin
+    (asserts! (is-eq tx-sender contract-owner) err-owner-only)
+    (asserts! (and (>= percentage u0) (< percentage u30)) err-invalid-threshold)
+    (var-set performance-fee-percentage percentage)
+    (ok true)))
+
+;; Run a simulation of different allocation strategies
+(define-public (simulate-strategy (risk-level uint) (scenario uint))
+  (begin
+    (asserts! (or (is-eq risk-level risk-conservative) 
+                (is-eq risk-level risk-moderate) 
+                (is-eq risk-level risk-aggressive)) 
+            err-invalid-risk-level)
+    
+    ;; Placeholder for simulation logic
+    ;; In a real implementation, this would run different scenarios and
+    ;; return projected performance metrics
+    
+    (ok u10) ;; Placeholder return for 10% projected growth
+  ))
+
+  ;; Get a simulation result
+(define-read-only (get-simulation-result (simulation-id uint))
+  ;; Placeholder for retrieving simulation results
+  (ok {
+    projected-growth: u10,
+    max-drawdown: u5,
+    sharpe-ratio: u200,
+    risk-level: risk-moderate
+  }))
+
+;; DCA configuration for users
+(define-map dca-configurations
+  { user: principal }
+  {
+    active: bool,
+    frequency-blocks: uint,
+    amount-per-period: uint,
+    target-asset-id: uint,
+    last-execution-block: uint,
+    source-asset-id: uint
+  }
+)
