@@ -346,3 +346,26 @@
     source-asset-id: uint
   }
 )
+
+
+;; ==================== NEW FEATURE: PORTFOLIO MANAGER DELEGATION ====================
+;; Allow users to delegate portfolio management
+(define-map delegated-managers
+  { user: principal, manager: principal }
+  {
+    active: bool,
+    expiration-height: uint,
+    fee-percentage: uint,
+    can-withdraw: bool
+  }
+)
+
+;; Manager performance tracking
+(define-map manager-performance
+  { manager: principal }
+  {
+    total-users: uint,
+    average-return: int,
+    assets-under-management: uint
+  }
+)
